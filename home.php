@@ -16,12 +16,32 @@
     
     $sql = "SELECT * FROM Blogs";
     $result = mysqli_query($conn, $sql);
-    
     if (mysqli_num_rows($result) > 0) {
+        $xml = new DOMDocument("1.0");
+        $xml->formatOutput=true;
+        $articles=$xml->createElement("articles");
+        $xml->appendChild($articles);
         // output data of each row
         while($row = mysqli_fetch_assoc($result)) {
-          echo "title: " . $row["title"]. " - content: " . $row["content"]. "<br>";
+          //echo "title: " . $row["title"]. " - content: " . $row["content"]. "<br>";
+?>
+          <h1><?php echo $row["title"] ?></h1>
+          <p>
+              <?php echo substr($row["content"],0,100); ?>
+              <a href="readblog.php?blogid=<?php echo $row['blogId']?>&currentemail=<?php echo $row['email']?>">Read More</a>
+          </p>
+<?php
+          $article=$xml->createElement("article");
+          $articles->appendChild($article);
+
+          $title=$xml->createElement("title", $row['title']);
+          $article->appendChild($title);
+     
+          $content=$xml->createElement("content", $row['content']);
+          $article->appendChild($content);
         }
+        //echo "<xmp>".$xml->saveXML()."</xmp>";
+        $xml->save("blogdata.xml");
       } else {
         echo "0 results";
       }
