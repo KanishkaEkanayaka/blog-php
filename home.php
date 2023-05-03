@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Blogger</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  </head>
-  <body>
   <?php 
-  $myEmail = isset($_GET['currentemail']) ? $_GET['currentemail'] : '';
-  include 'navbar.php';
+    $myEmail = isset($_GET['currentemail']) ? $_GET['currentemail'] : ''; 
+    include 'navbar.php';
+  ?>
+<body>
+  <?php 
   include 'conn.php';
     
     $sql = "SELECT * FROM Blogs";
@@ -25,11 +17,26 @@
         while($row = mysqli_fetch_assoc($result)) {
           //echo "title: " . $row["title"]. " - content: " . $row["content"]. "<br>";
 ?>
-          <h1><?php echo $row["title"] ?></h1>
-          <p>
-              <?php echo substr($row["content"],0,100); ?>
-              <a href="readblog.php?blogid=<?php echo $row['blogId']?>&currentemail=<?php echo $row['email']?>">Read More</a>
-          </p>
+
+<section id="details" class="details container-fluid">
+
+  <hr class="featurette-divider">
+
+  <div class="row featurette d-2">
+    <div class="col-md-7 col-lg-9 order-md-2">
+      <h2 class="featurette-heading"><?php echo $row["title"] ?></h2>
+      <p class="lead">
+        <?php echo substr($row["content"],0,1000); ?>
+        <a href="readblog.php?blogid=<?php echo $row['blogId']?>&currentemail=<?php echo $row['email']?>">Read More</a>
+      </p>
+    </div>
+    <div class="col-md-5 col-lg-3 order-md-1">
+      <img class="featurette-image img-fluid mx-auto ps-5" src="public/images/reading.jpeg" alt="Generic placeholder image">
+    </div>
+  </div>
+
+
+</section>
 <?php
           $article=$xml->createElement("article");
           $articles->appendChild($article);
@@ -40,8 +47,8 @@
           $content=$xml->createElement("content", $row['content']);
           $article->appendChild($content);
         }
-        //echo "<xmp>".$xml->saveXML()."</xmp>";
-        $xml->save("blogdata.xml");
+        echo "<xmp>".$xml->saveXML()."</xmp>";
+        $xml->save('test1.xml'); // save as file
       } else {
         echo "0 results";
       }
@@ -55,4 +62,7 @@
 
 
 </body>
+
+<?php include 'footer.php'; ?>
+
 </html>

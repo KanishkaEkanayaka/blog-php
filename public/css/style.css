@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Mukta');
-body{
+.login{
   font-family: 'Mukta', sans-serif;
 	height:100vh;
 	min-height:550px;
@@ -151,4 +151,13 @@ a{
   text-decoration:none;
   color:#2c7715;
 }
-  
+
+.article-title{
+    color: #146C94;
+}
+
+#footer p{
+    padding: 1%;
+    text-align: center;
+    color: #3533ad;
+  }

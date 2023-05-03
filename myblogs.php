@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Blogger</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  </head>
+  <?php
+    $myEmail = isset($_GET['currentemail']) ? $_GET['currentemail'] : '';
+    include 'navbar.php';
+  ?> 
   <body>
   <?php 
-  $myEmail = isset($_GET['currentemail']) ? $_GET['currentemail'] : '';
-  include 'navbar.php';
+  
   include 'conn.php';
     
     $sql = "SELECT * FROM Blogs where email='$myEmail'";
@@ -23,11 +16,25 @@
           //echo "title: " . $row["title"]. " - content: " . $row["content"]. "<br>";
    ?>     
           
-          <h1><?php echo $row["title"] ?></h1>
-          <p>
-          <?php echo substr($row["content"],0,100) ?>
-              <a href="readblog.php?blogid=<?php echo $row['blogId']?>&currentemail=<?php echo $row['email']?>">Read More</a>
+   <section id="details" class="details container-fluid">
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette d-2">
+      <div class="col-md-7 col-lg-9 order-md-2">
+        <h2 class="featurette-heading"><?php echo $row["title"] ?></h2>
+          <p class="lead">
+          <?php echo substr($row["content"],0,1000); ?>
+          <a href="readblog.php?blogid=<?php echo $row['blogId']?>&currentemail=<?php echo $row['email']?>">Read More</a>
           </p>
+      </div>
+      <div class="col-md-5 col-lg-3 order-md-1">
+        <img class="featurette-image img-fluid mx-auto ps-5" src="public/images/reading.jpeg" alt="Generic placeholder image">
+      </div>
+    </div>
+
+  <hr class="featurette-divider">
+</section>
   <?php
         }
       } else {
@@ -40,7 +47,7 @@
   <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
   <script src=""></script>  
 
-
+<?php include 'footer.php'; ?>
 
 </body>
 </html>
